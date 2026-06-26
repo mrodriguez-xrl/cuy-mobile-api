@@ -4,6 +4,9 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -21,7 +24,19 @@ public class MetricsController {
 
     @Operation(
             summary = "Consultar métricas de un elemento",
-            description = "Devuelve el último valor registrado de un KPI (cpu_pct, mem_pct, throughput_mbps, latency_ms) para un servidor específico"
+            description = "Devuelve el último valor registrado de un KPI (cpu_pct, mem_pct, throughput_mbps, latency_ms) para un servidor específico",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Métricas del elemento",
+                            content = @Content(examples = @ExampleObject(value = """
+                    {
+                      "element_id": "LIM-SRV-01",
+                      "metric": "cpu_pct",
+                      "points": [
+                        {"ts": "2026-06-26T15:45:00Z", "value": 24.44}
+                      ]
+                    }
+                    """)))
+            }
     )
     @GetMapping("/{elementId}/metrics")
     public Map<String, Object> getMetrics(

@@ -1,6 +1,9 @@
 package com.example.cuymobileapi.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.Session;
@@ -21,7 +24,21 @@ public class TopologyController {
 
     @Operation(
             summary = "Análisis de impacto",
-            description = "Dado un servidor o switch, devuelve todas las funciones de red (AMF, SMF, UPF, etc.) que quedarían fuera de servicio si ese elemento fallara"
+            description = "Dado un servidor o switch, devuelve todas las funciones de red (AMF, SMF, UPF, etc.) que quedarían fuera de servicio si ese elemento fallara",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Análisis exitoso",
+                            content = @Content(examples = @ExampleObject(value = """
+                    {
+                      "failed_node": "LIM-SRV-01",
+                      "impacted_count": 3,
+                      "impact": [
+                        {"nf": "LIM-AMF-01", "tipo": "AMF", "site": "LIM", "dependientes": []},
+                        {"nf": "LIM-UDM-01", "tipo": "UDM", "site": "LIM", "dependientes": []},
+                        {"nf": "LIM-UPF-01", "tipo": "UPF", "site": "LIM", "dependientes": []}
+                      ]
+                    }
+                    """)))
+            }
     )
     @GetMapping("/{elementId}/impact")
     public Map<String, Object> getImpact(@PathVariable String elementId) {

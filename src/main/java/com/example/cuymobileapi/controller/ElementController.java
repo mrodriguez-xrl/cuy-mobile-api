@@ -1,6 +1,9 @@
 package com.example.cuymobileapi.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,7 +25,30 @@ public class ElementController {
 
     @Operation(
             summary = "Listar elementos de red",
-            description = "Devuelve todos los servidores, switches, storage y funciones de red (AMF, SMF, UPF, etc.) distribuidos en los 14 sites de Cuy Mobile en Perú"
+            description = "Devuelve todos los servidores, switches, storage y funciones de red (AMF, SMF, UPF, etc.) distribuidos en los 14 sites de Cuy Mobile en Perú",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Lista de elementos",
+                            content = @Content(examples = @ExampleObject(value = """
+                    [
+                      {
+                        "_id": "LIM-SRV-01",
+                        "kind": "compute_server",
+                        "name": "compute-lim-01",
+                        "location": {"site": "LIM", "region": "Lima", "tier": 1},
+                        "status": {"enabled": true, "maintenance_mode": false},
+                        "hardware": {"cpu_cores": 64, "ram_gb": 512}
+                      },
+                      {
+                        "_id": "LIM-AMF-01",
+                        "kind": "network_function",
+                        "nf_type": "AMF",
+                        "name": "amf-lim-01",
+                        "location": {"site": "LIM", "region": "Lima", "tier": 1},
+                        "hosted_on": "LIM-SRV-01"
+                      }
+                    ]
+                    """)))
+            }
     )
     @GetMapping
     public List<Document> getElements() {
