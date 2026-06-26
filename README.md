@@ -39,7 +39,13 @@ flowchart TB
 | Caché, rate-limiting, heartbeats | Latencia sub-milisegundo, TTL nativo | Redis |
 
 ---
+## Contexto: Red Núcleo 5G (5GC)
 
+El sistema modela una red 5G real según el estándar 3GPP. Cada función de red (NF)
+se comunica con otras mediante interfaces de referencia numeradas (N1, N2, N4, N11...).
+Estas dependencias son las que Neo4j modela como grafo para el análisis de impacto.
+
+![5G Core Architecture](docs/5gcore.png)
 ## Modelo de datos
 
 ### MongoDB — Inventario (fuente de verdad)
