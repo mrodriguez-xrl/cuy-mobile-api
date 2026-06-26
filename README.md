@@ -1,7 +1,7 @@
 # Cuy Mobile 5GC — API de Inventario y Observabilidad
 
 API REST para el inventario y monitoreo de una red núcleo 5G (5GC) del operador ficticio Cuy Mobile, distribuida en 14 sites del Perú.
-Proyecto del curso Lenguajes de Programación (1INF13) — Maestría en Informática, PUCP.
+
 
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-green)
